@@ -1,0 +1,6 @@
+public/*
+!public/.gitinclude
+!public/app/lib
+
+node_modules
+coverage
