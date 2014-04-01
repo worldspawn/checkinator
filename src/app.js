@@ -2,10 +2,10 @@
     'use strict';
 
     angular.module('checkinator', [
-        'app.security'
-        ]).run(['authentication', function (Authentication) {
-            var authenticationService = new Authentication();
+        'app.services'
+        ]).run(['loginService', '$rootScope', function (loginService, $rootScope) {
+            $rootScope.auth = loginService.init('/login');
         }]);
 
-    angular.bootstrap(document, ['checkinator']);        
+    //angular.bootstrap(document, ['checkinator']);        
 })();

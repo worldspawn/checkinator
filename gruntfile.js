@@ -22,10 +22,7 @@ module.exports = function (grunt) {
         eqnull: true,
         globals: {
           angular: true,
-          Firebase: true,
-          FirebaseSimpleLogin: true,
-          console: true,
-          document: true
+          console: true
         }
       }
     },
