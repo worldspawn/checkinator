@@ -1,7 +1,7 @@
-public/*
-!public/.gitinclude
-!public/app/lib
-
+public/app.js
+public/index.html
 node_modules
 coverage
 src/app.templates
+
+.DS_Store
