@@ -40,8 +40,9 @@
                 },
                 setStatus: function(user, newStatus){
                     var email = user.email.replace(/\./g, '_');
-                    firebaseRef('status/' + email + '/statushistory').push(newStatus);
-                    firebaseRef('status/' + email + '/status').set(newStatus);
+                    var userObj = firebaseRef('status/' + email);
+                    userObj.child('statushistory').push(newStatus);
+                    userObj.child('status').set(newStatus);
                 },
                 addUser: function(user, callback){
                     var email = user.email.replace(/\./g, '_');

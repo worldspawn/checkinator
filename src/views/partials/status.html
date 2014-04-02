@@ -18,12 +18,12 @@
 	<form ng-if="loggedOn === true" name="statusUpdate" ng-controller="StatusUpdateController" ng-submit="commitStatus()" role="form">
 		<fieldset>
 			<div class="form-group">
-				<label>Location</label>
-				<input type="text" ng-model="update.location" typeahead="location for location in locations" class="form-control">
-			</div>
-			<div class="form-group">
 				<label>Status</label>
 				<input type="text" ng-model="update.status" typeahead="activity for activity in activities" class="form-control">
+			</div>
+			<div class="form-group">
+				<label>Location</label>
+				<input type="text" ng-model="update.location" typeahead="location for location in locations" class="form-control">
 			</div>
 			<div class="form-group">
 				<label>Returning</label>
