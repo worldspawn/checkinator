@@ -322,7 +322,9 @@ angular.module('app.service.login', ['firebase', 'app.service.firebase'])
                                 this.addUser(user, callback);
                             }
                             else{
-                                callback(null, val);
+                                if (callback) {
+                                    callback(null, val);
+                                }
                             }
                         }));
                 },
@@ -388,7 +390,7 @@ angular.module("views/partials/status.html", []).run(["$templateCache", function
     "		<tr ng-repeat=\"status in statusList\">\n" +
     "			<td><img ng-src=\"{{status.picture}}\" width=\"80\" /></td>\n" +
     "			<td>{{status.displayName}}</td>\n" +
-    "			<td>{{status.status.status}} @ {{status.status.location}} till {{status.status.returning}}</td>\n" +
+    "			<td>{{status.status.status}} @ {{status.status.location}} till {{status.status.returning | date : 'HH:mm MMM dd'}}</td>\n" +
     "		</tr>\n" +
     "		</tbody>\n" +
     "	</table>\n" +

@@ -8,7 +8,7 @@
 		<tr ng-repeat="status in statusList">
 			<td><img ng-src="{{status.picture}}" width="80" /></td>
 			<td>{{status.displayName}}</td>
-			<td>{{status.status.status}} @ {{status.status.location}} till {{status.status.returning}}</td>
+			<td>{{status.status.status}} @ {{status.status.location}} till {{status.status.returning | date : 'HH:mm MMM dd'}}</td>
 		</tr>
 		</tbody>
 	</table>

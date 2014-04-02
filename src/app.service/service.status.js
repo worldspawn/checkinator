@@ -32,7 +32,9 @@
                                 this.addUser(user, callback);
                             }
                             else{
-                                callback(null, val);
+                                if (callback) {
+                                    callback(null, val);
+                                }
                             }
                         }));
                 },
