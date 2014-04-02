@@ -1,0 +1,53 @@
+<div class="container">
+<h1>Status</h1>
+
+<div class="row">
+<div class="col-md-8">
+	<table class="table">
+		<tbody>
+		<tr ng-repeat="status in statusList">
+			<td><img ng-src="{{status.picture}}" width="80" /></td>
+			<td>{{status.displayName}}</td>
+			<td>{{status.status.status}} @ {{status.status.location}} till {{status.status.returning}}</td>
+		</tr>
+		</tbody>
+	</table>
+</div>
+
+<div class="col-md-4">
+	<form ng-if="loggedOn === true" name="statusUpdate" ng-controller="StatusUpdateController" ng-submit="commitStatus()" role="form">
+		<fieldset>
+			<div class="form-group">
+				<label>Location</label>
+				<input type="text" ng-model="update.location" typeahead="location for location in locations" class="form-control">
+			</div>
+			<div class="form-group">
+				<label>Status</label>
+				<input type="text" ng-model="update.status" typeahead="activity for activity in activities" class="form-control">
+			</div>
+			<div class="form-group">
+				<label>Returning</label>
+				<p class="input-group">
+					<span class="input-group-btn">
+						<button class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+					</span>
+				</p>
+				<div>
+					<button type="button" class="btn btn-danger" ng-click="addMinutes(15)">15m</button>
+					<button type="button" class="btn btn-danger" ng-click="addMinutes(30)">30m</button>
+					<button type="button" class="btn btn-danger" ng-click="addMinutes(60)">1 hr</button>
+					<button type="button" class="btn btn-danger" ng-click="setTomorrow()">Tomorrow</button>
+					<button type="button" class="btn btn-danger" ng-click="addMinutes(10080)">1 Week</button>
+				</div>
+				<div ng-model="update.returning" style="display:inline-block;">
+					<timepicker hour-step="1" minute-step="15" show-meridian="false"></timepicker>
+				</div>				
+			</div>
+		</fieldset>
+		<fieldset>
+			<button type="submit" class="btn btn-primary" ng-disabled="statusUpdate.$invalid">Update</button>
+		</fieldset>
+	</form>
+</div>
+</div>
+</div>

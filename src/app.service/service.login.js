@@ -14,6 +14,19 @@ angular.module('app.service.login', ['firebase', 'app.service.firebase'])
             return auth = $firebaseSimpleLogin(firebaseRef());
          },
 
+         google: function(callback){
+            assertAuth();
+            auth.$login('google').then(function(user){
+               if (callback){
+                  callback(null, user);
+               }
+            }, callback);
+         },
+
+         getCurrentUser: function(){
+            return auth.$getCurrentUser();
+         },
+
          /**
           * @param {string} email
           * @param {string} pass

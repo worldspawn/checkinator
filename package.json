@@ -13,6 +13,8 @@
     "grunt-karma-coveralls": "~2.4.3",
     "grunt-istanbul-coverage": "0.0.5",
     "karma-coverage": "~0.2.1",
-    "http-server": "~0.6.1"
+    "http-server": "~0.6.1",
+    "grunt-html2js": "~0.2.4",
+    "grunt-contrib-watch": "~0.6.1"
   }
 }
