@@ -61,5 +61,12 @@
                 selectedTime.setMinutes(0);
                 $scope.update.returning = new Date(selectedTime);
             };
+
+            $scope.open = function($event) {
+                $event.preventDefault();
+                $event.stopPropagation();
+
+                $scope.opened = true;
+            };
         }]);
 })();

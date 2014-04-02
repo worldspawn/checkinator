@@ -28,8 +28,9 @@
 			<div class="form-group">
 				<label>Returning</label>
 				<p class="input-group">
+					<input type="text" class="form-control" is-open="opened" datepicker-popup="d MMMM yyyy" ng-model="update.returning" ng-required="true" close-text="Close" />
 					<span class="input-group-btn">
-						<button class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+						<button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
 					</span>
 				</p>
 				<div>
