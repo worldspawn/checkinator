@@ -10,12 +10,19 @@
                     templateUrl: 'views/partials/login.html',
                     controller : function($scope) {
                         $scope.loginGoogle = function() {
-                            loginService.google(function(error, user){
-                                if (user){
-                                    $rootScope.loggedOn = true;
-                                    $rootScope.$broadcast('identityEstablished', user);
-                                }
-                            });
+                            loginService.google();
+                        };
+
+                        $scope.loginTwitter = function() {
+                            loginService.twitter();
+                        };
+
+                        $scope.logout = function() {
+                            loginService.logout();
+                        };
+
+                        $scope.isLoggedOn = function(){
+                            return loginService.user() !== null;
                         };
 
                         loginService.getCurrentUser().then(function(user){

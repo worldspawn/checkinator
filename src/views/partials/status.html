@@ -8,7 +8,9 @@
 		<tr ng-repeat="status in statusList">
 			<td><img ng-src="{{status.picture}}" width="80" /></td>
 			<td>{{status.displayName}}</td>
-			<td>{{status.status.status}} @ {{status.status.location}} till {{status.status.returning | date : 'HH:mm MMM dd'}}</td>
+			<td>
+				{{status.status.status}} @ {{status.status.location}} 
+				<span ng-if="status.status.returning">till {{status.status.returning | date : 'HH:mm MMM dd'}}</span></td>
 		</tr>
 		</tbody>
 	</table>
@@ -47,6 +49,7 @@
 		</fieldset>
 		<fieldset>
 			<button type="submit" class="btn btn-primary" ng-disabled="statusUpdate.$invalid">Update</button>
+			<button ng-if="!isCheckedIn()" type="button" class="btn" ng-click="checkin()">Check-In</button>
 		</fieldset>
 	</form>
 </div>

@@ -2,11 +2,13 @@
     'use strict';
 
     angular.module('app.controller.status', ['app.service.status'])
-        .controller('StatusController', ['$scope', 'statusService', function($scope, StatusService){
-            var statusService = new StatusService();
+        .controller('StatusController', ['$scope', 'statusService', function($scope, statusService){
+            $scope.$on('StatusService:statusloaded', function(event, statusList){
+                $scope.statusList = statusList;
+            });
 
-            $scope.$watch(function() { return statusService.status; }, function(val){
-                $scope.statusList = val;
-            });            
+            $scope.$on('StatusService:statusunloaded', function(event){
+                $scope.statusList = null;
+            });
         }]);
 })();

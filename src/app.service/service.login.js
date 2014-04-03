@@ -23,8 +23,23 @@ angular.module('app.service.login', ['firebase', 'app.service.firebase'])
             }, callback);
          },
 
+         twitter: function(callback){
+            assertAuth();
+            auth.$login('twitter').then(function(user){
+               if (callback){
+                  callback(null, user);
+               }
+            }, callback);
+         },
+
          getCurrentUser: function(){
+            assertAuth();
             return auth.$getCurrentUser();
+         },
+
+         user: function(){
+            assertAuth();
+            return auth.user;
          },
 
          /**

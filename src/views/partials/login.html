@@ -1,4 +1,13 @@
-<div ng-if="loggedOn !== true">
-	<p>LOGIN</p>
-	<button type="button" ng-click="loginGoogle()">GOOGLE</button>
+<div>
+	<div ng-if="isLoggedOn() !== true">
+		<p>LOGIN</p>
+		<button type="button" ng-click="loginGoogle()">GOOGLE</button>
+		<button type="button" ng-click="loginTwitter()">TWITTER</button>
+		twitter doesn't work yet.
+	</div>
+
+	<div ng-if="isLoggedOn() === true">
+		<p>LOGIN</p>
+		<button type="button" ng-click="logout()">LOGOUT</button>
+	</div>
 </div>

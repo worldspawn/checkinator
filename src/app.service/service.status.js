@@ -2,7 +2,7 @@
     'use strict';
 
     angular.module('app.service.status', ['firebase', 'app.service.firebase'])
-        .factory('statusService', ['$firebase', 'firebaseRef', '$rootScope', '$timeout', function($firebase, firebaseRef, $rootScope, $timeout){
+        .factory('statusService', ['$firebase', 'firebaseRef', '$rootScope', '$timeout', '$q', function($firebase, firebaseRef, $rootScope, $timeout, $q){
             function UserStatus() {
                 this.status = 'In Office';
                 this.departed = null;
@@ -12,63 +12,102 @@
             }
 
             function StatusService() {
-                this.status = $firebase(firebaseRef('status'));
+                $rootScope.$on('$firebaseSimpleLogin:login', angular.bind(this, function(event, user){
+                    this.key = user.email.replace(/\./g, '_');
+                    this.statusRef = firebaseRef('currentstatus');
+                    this.statusHistoryRef = firebaseRef('statushistory/' + this.key);
+                    this.status = $firebase(this.statusRef);
+                    this.userprofileRef = firebaseRef('users/' + this.key);
+                    this.userprofileRef.on('value', angular.bind(this, function(snap) {
+                            if (snap.val() === null){
+                                //user has no profile!
+                                this.addProfile(user).then(angular.bind(this, function(profile){
+                                    //profile is now saved
+                                    this.userprofile = profile;
+                                    this.setStatus(new UserStatus());
+                                }));
+                            }
+                            else{
+                                this.userprofile = snap.val();
+                                $rootScope.$broadcast('StatusService:profileupdated', this.userprofile);
+                            }
+                        }));
 
-                $rootScope.$on('identityEstablished',  angular.bind(this, function(ev, data){
-                    this.status = $firebase(firebaseRef('status'));
-                    this.getStatusForUser(data, true);
+                    $rootScope.$broadcast('StatusService:statusloaded', this.status);
+                }));
+
+                $rootScope.$on('$firebaseSimpleLogin:logout', angular.bind(this, function(event){
+                    this.key = null;
+                    this.statusRef = null;
+                    this.status = null;
+                    this.userprofileRef = null;
+                    this.userprofile = null;
+                    $rootScope.$broadcast('StatusService:statusunloaded');
                 }));
             }
 
             StatusService.prototype = {
-                getStatusForUser: function(user, create, callback) {
-                    var email = user.email.replace(/\./g, '_');
+                updateProfile: function(update){
+                    this.userprofileRef.update(update);
+                },
+                setStatus: function(newStatus){
+                    var defer = $q.defer();
+                    var currentStatus = this.status[this.key];
 
-                    firebaseRef('/status/' + email)
-                        .once('value', angular.bind(this, function(snap){
-                            var val = snap.val();
+                    newStatus.datecreated = new Date().toISOString();
 
-                            if (create && val === null){
-                                this.addUser(user, callback);
+                    this.statusRef.child(this.key).set(
+                        angular.extend({}, 
+                            { email: this.userprofile.email, displayName : this.userprofile.displayName, picture: this.userprofile.picture },
+                            { status : newStatus }),
+                        angular.bind(this, function (error){
+                            if (error){
+                                defer.reject(error);
                             }
                             else{
-                                if (callback) {
-                                    callback(null, val);
+                                if (currentStatus){
+                                    var history = this.statusHistoryRef.push();
+                                    var oldStatus = currentStatus.status;
+                                    history.set(oldStatus, function(error){
+                                        if (error){
+                                            defer.reject(error);
+                                        }
+                                        else{
+                                            defer.resolve();
+                                        }
+                                    });
+                                    
+                                }
+                                else{
+                                    defer.resolve();
                                 }
                             }
                         }));
+
+                    return defer.promise;
+
                 },
-                setStatus: function(user, newStatus){
-                    var email = user.email.replace(/\./g, '_');
-                    var userObj = firebaseRef('status/' + email);
-                    userObj.child('statushistory').push(newStatus);
-                    userObj.child('status').set(newStatus);
-                },
-                addUser: function(user, callback){
-                    var email = user.email.replace(/\./g, '_');
-                    var userObj = {
-                        displayName: user.displayName,
+                addProfile: function(user){
+                    var defer = $q.defer();
+                    var profile = {
                         email: user.email,
+                        displayName: user.displayName,
                         picture: user.picture
                     };
-                    
-                    firebaseRef('/status/' + email).setWithPriority(userObj, user.email, function(err){
-                        if (callback) {
-                            if (!err){
-                                var s = firebaseRef('status/' + email + '/statushistory').push();
-                                var ns = new UserStatus();
-                                ns.departed = new Date();
-                                s.set(ns);
-                                firebaseRef('status/' + email + '/status').set(ns);
-                            }
-                            $timeout(function() {
-                                callback(err, userObj);
-                            });
+
+                    this.userprofileRef.set(profile, function(error){
+                        if (error){
+                            defer.reject(error);
+                        }
+                        else{
+                            defer.resolve(profile);
                         }
                     });
+
+                    return defer.promise;
                 }
             };
 
-            return StatusService;
+            return new StatusService();
         }]);
 })();

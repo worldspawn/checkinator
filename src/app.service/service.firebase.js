@@ -2,10 +2,10 @@
     'use strict';
 
     angular.module('app.service.firebase', ['firebase'])
-        .factory('firebaseRef', ['Firebase',
-            function(Firebase) {
+        .factory('firebaseRef', ['Firebase', 'fburl', 
+            function(Firebase, fburl) {
                 return function(path) {
-                    return new Firebase(pathRef(['https://checkinator.firebaseio.com/'].concat(Array.prototype.slice.call(arguments))));
+                    return new Firebase(pathRef([fburl].concat(Array.prototype.slice.call(arguments))));
                 };
             }
         ])
@@ -26,7 +26,8 @@
                     return $firebase(ref);
                 };
             }
-        ]);
+        ])
+        .value('fburl', 'https://checkinator.firebaseio.com/');
 
     function pathRef(args) {
         for (var i = 0; i < args.length; i++) {

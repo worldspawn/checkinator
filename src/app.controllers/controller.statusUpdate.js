@@ -2,10 +2,7 @@
     'use strict';
 
     angular.module('app.controller.statusupdate', ['app.service.status'])
-        .controller('StatusUpdateController', ['$scope', 'statusService', 'loginService', '$firebase', 'firebaseRef',
-            function($scope, StatusService, loginService, $firebase, firebaseRef){
-            var statusService = new StatusService();
-
+        .controller('StatusUpdateController', ['$scope', 'statusService', 'loginService', '$firebase', 'firebaseRef', function($scope, statusService, loginService, $firebase, firebaseRef){
             var locations = $firebase(firebaseRef('locations'));
             locations.$on('value', function(data){
                 $scope.locations = [];
@@ -22,9 +19,19 @@
                 });
             });
 
+            var defaultStatus = null;
+            var defaultLocation = null;
+
+            $scope.$on('StatusService:profileupdated', function(event, profile){
+                defaultStatus = profile.lastStatus;
+                defaultLocation = profile.lastLocation;
+
+                $scope.update = new StatusUpdate();
+            });
+
             function StatusUpdate(){
-                this.location = null;
-                this.status = null;
+                this.location = defaultLocation;
+                this.status = defaultStatus;
 
                 var currentTime = new Date();
                 var minutes = currentTime.getMinutes();
@@ -34,19 +41,36 @@
                 this.returning = currentTime;
             }
 
-            function commitStatus(){                
-                var update = $scope.update;
+            function checkin(){
+                var status = new StatusUpdate();
+                status.location = 'Melbourne Office';
+                status.status = 'At Work';
 
-                loginService.getCurrentUser().then(function(user){
-                    update.returning = update.returning.toISOString();
-                    statusService.setStatus(user, update);
-
-                    $scope.update = new StatusUpdate();
-                });                
+                statusService.setStatus(status)                ;
+                statusService.updateProfile({
+                    lastStatus: status.status,
+                    lastLocation: status.location
+                });
             }
 
-            $scope.update = new StatusUpdate();
+            function commitStatus(){
+                var update = $scope.update;
+
+                update.returning = update.returning.toISOString();
+                statusService.setStatus(update);
+
+                statusService.updateProfile({
+                    lastStatus: update.status,
+                    lastLocation: update.location
+                });
+            }
+
             $scope.commitStatus = commitStatus;
+            $scope.checkin = checkin;
+
+            $scope.isCheckedIn = function(){
+                return statusService.status && statusService.status[statusService.key] && !statusService.status[statusService.key].status.returning;
+            };
 
             $scope.addMinutes = function(minutes) {
                 var selectedTime = $scope.update.returning;
