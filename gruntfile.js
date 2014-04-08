@@ -63,6 +63,10 @@ module.exports = function(grunt) {
         tasks: ['concat', 'jshint'],
         files: ['src/app.*/*.js', 'src/app.js']
       },
+      less: {
+        tasks: ['less'],
+        files: ['src/less/**/*']
+      },
       templates: {
         tasks: ['html2js'],
         files: ['src/views/partials/*.html']
