@@ -29,18 +29,18 @@
 			</div>
 			<div class="form-group">
 				<label>Returning</label>
-				<p class="input-group">
+				<span class="input-group">
 					<input type="text" class="form-control" is-open="opened" datepicker-popup="d MMMM yyyy" ng-model="update.returning" ng-required="true" close-text="Close" />
 					<span class="input-group-btn">
 						<button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
 					</span>
-				</p>
-				<div>
-					<button type="button" class="btn btn-danger" ng-click="addMinutes(15)">15m</button>
-					<button type="button" class="btn btn-danger" ng-click="addMinutes(30)">30m</button>
-					<button type="button" class="btn btn-danger" ng-click="addMinutes(60)">1 hr</button>
-					<button type="button" class="btn btn-danger" ng-click="setTomorrow()">Tomorrow</button>
-					<button type="button" class="btn btn-danger" ng-click="addMinutes(10080)">1 Week</button>
+				</span>
+				<div class="btn-group">
+					<button type="button" class="btn btn-default" ng-click="addMinutes(15)">15m</button>
+					<button type="button" class="btn btn-default" ng-click="addMinutes(30)">30m</button>
+					<button type="button" class="btn btn-default" ng-click="addMinutes(60)">1 hr</button>
+					<button type="button" class="btn btn-default" ng-click="setTomorrow()">Tomorrow</button>
+					<button type="button" class="btn btn-default" ng-click="addMinutes(10080)">1 Week</button>
 				</div>
 				<div ng-model="update.returning" style="display:inline-block;">
 					<timepicker hour-step="1" minute-step="15" show-meridian="false"></timepicker>
@@ -49,7 +49,7 @@
 		</fieldset>
 		<fieldset>
 			<button type="submit" class="btn btn-primary" ng-disabled="statusUpdate.$invalid">Update</button>
-			<button ng-if="!isCheckedIn()" type="button" class="btn" ng-click="checkin()">Check-In</button>
+			<button ng-if="!isCheckedIn()" type="button" class="btn btn-primary" ng-click="checkin()">Check-In</button>
 		</fieldset>
 	</form>
 </div>

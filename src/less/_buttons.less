@@ -1,0 +1,9 @@
+.btn {
+    // background-image: none;
+    &.disabled,
+    &[disabled],
+    fieldset[disabled] & {
+        .opacity(1);
+        background: @brand-grey-light;
+    }
+}
