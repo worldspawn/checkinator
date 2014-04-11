@@ -1,17 +1,36 @@
 // styling
-@brand-primary: #00AEEF;
-@brand-primary-dark: darken(@brand-primary, 20%);
-@body-bg: #f3f3f7;
+@brand-primary           : #002A4A;
+@brand-primary-light     : #3988C4;
+@brand-primary-dark      : #111920;
 
-@brand-grey: desaturate(@brand-primary-dark, 70%);
-@brand-grey-light: lighten(@brand-grey, 50%);
+@body-bg                 : @brand-primary-dark;
 
-@border-radius-base: 3px;
+@brand-white             : #CCD7E0;
+@brand-grey              : #3F484F;
+@brand-grey-light        : mix(@brand-grey, @brand-white);
 
-@input-bg: mix(@body-bg, @brand-primary-dark, 85%);
-@input-color: @brand-primary-dark;
-@input-border: @input-bg;
+@border-radius-base      : 3px;
 
-@btn-default-color:              @brand-primary;
-@btn-default-bg:                 #fff;
-@btn-default-border:             @brand-primary;
+@input-bg                : @brand-white;
+@input-color             : @brand-primary;
+@input-border            : @input-bg;
+
+@btn-default-color       : @brand-primary;
+@btn-default-bg          : #fff;
+@btn-default-border      : lighten(@brand-primary, 5%);
+
+@btn-primary-color       : #fff;
+@btn-primary-bg          : @brand-primary;
+@btn-primary-border      : lighten(@brand-primary, 5%);
+
+@panel-bg                : #fff;
+@panel-body-padding      : 15px;
+@panel-border-radius     : @border-radius-base;
+
+//** Border color for elements within panels
+@panel-inner-border      : #ddd;
+@panel-footer-bg         : transparent;
+
+@panel-default-text      : @gray-dark;
+@panel-default-border    : #ddd;
+@panel-default-heading-bg: transparent;

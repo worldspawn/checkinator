@@ -1,13 +1,11 @@
-<div>
+<div class="panel-login">
 	<div ng-if="isLoggedOn() !== true">
 		<p>LOGIN</p>
-		<button type="button" ng-click="loginGoogle()">GOOGLE</button>
-		<button type="button" ng-click="loginTwitter()">TWITTER</button>
-		twitter doesn't work yet.
+		<button type="button" class="btn btn-google" ng-click="loginGoogle()">Google</button>
+		<button type="button" class="btn btn-twitter" disabled ng-click="loginTwitter()">Twitter</button>
 	</div>
 
 	<div ng-if="isLoggedOn() === true">
-		<p>LOGIN</p>
-		<button type="button" ng-click="logout()">LOGOUT</button>
+		<button type="button" class="btn btn-default" ng-click="logout()">LOGOUT</button>
 	</div>
 </div>

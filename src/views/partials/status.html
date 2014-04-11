@@ -1,57 +1,69 @@
-<div class="container">
-<h1>Status</h1>
+<header class="page-title">
+	<h1>Status</h1>
+</header>
 
-<div class="row">
-<div class="col-md-8">
-	<table class="table">
-		<tbody>
-		<tr ng-repeat="status in statusList">
-			<td><img ng-src="{{status.picture}}" width="80" /></td>
-			<td>{{status.displayName}}</td>
-			<td>
-				{{status.status.status}} @ {{status.status.location}} 
-				<span ng-if="status.status.returning">till {{status.status.returning | date : 'HH:mm MMM dd'}}</span></td>
-		</tr>
-		</tbody>
-	</table>
-</div>
-
-<div class="col-md-4">
-	<form name="statusUpdate" ng-controller="StatusUpdateController" ng-submit="commitStatus()" role="form">
-		<fieldset>
-			<div class="form-group">
-				<label>Status</label>
-				<input type="text" ng-model="update.status" typeahead="activity for activity in activities" class="form-control">
-			</div>
-			<div class="form-group">
-				<label>Location</label>
-				<input type="text" ng-model="update.location" typeahead="location for location in locations" class="form-control">
-			</div>
-			<div class="form-group">
-				<label>Returning</label>
-				<span class="input-group">
-					<input type="text" class="form-control" is-open="opened" datepicker-popup="d MMMM yyyy" ng-model="update.returning" ng-required="true" close-text="Close" />
-					<span class="input-group-btn">
-						<button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
-					</span>
-				</span>
-				<div class="btn-group">
-					<button type="button" class="btn btn-default" ng-click="addMinutes(15)">15m</button>
-					<button type="button" class="btn btn-default" ng-click="addMinutes(30)">30m</button>
-					<button type="button" class="btn btn-default" ng-click="addMinutes(60)">1 hr</button>
-					<button type="button" class="btn btn-default" ng-click="setTomorrow()">Tomorrow</button>
-					<button type="button" class="btn btn-default" ng-click="addMinutes(10080)">1 Week</button>
+	<div class="panel-status-list">
+		<header class="panel-heading">
+			<h3>Staff Lookup</h3>
+		</header>
+		<div class="panel-body">
+			<div class="media-list">
+				<div class="media" ng-repeat="status in statusList">
+					<div class="avatar pull-left">
+						<img ng-src="{{status.picture}}" class="media-object img-circle" width="80" />
+					</div>
+					<div class="media-body">
+						<h4>{{status.displayName}}</h4>
+						<span>
+							{{status.status.status}} @ {{status.status.location}} 
+							<span ng-if="status.status.returning">till {{status.status.returning | date : 'HH:mm MMM dd'}}</span></span>
+						
+					</div>
 				</div>
-				<div ng-model="update.returning" style="display:inline-block;">
-					<timepicker hour-step="1" minute-step="15" show-meridian="false"></timepicker>
-				</div>				
 			</div>
-		</fieldset>
-		<fieldset>
-			<button type="submit" class="btn btn-primary" ng-disabled="statusUpdate.$invalid">Update</button>
-			<button ng-if="!isCheckedIn()" type="button" class="btn btn-primary" ng-click="checkin()">Check-In</button>
-		</fieldset>
-	</form>
-</div>
-</div>
-</div>
+		</div>
+	</div>
+	
+	<div class="panel-status-update">
+		<header class="panel-heading">
+			<h3>Update Your Status</h3>
+		</header>
+		<form name="statusUpdate" ng-controller="StatusUpdateController" ng-submit="commitStatus()" role="form">
+			<div class="panel-body">
+				<div class="form-group">
+					<label>Status</label>
+					<input type="text" ng-model="update.status" typeahead="activity for activity in activities" class="form-control">
+				</div>
+				<div class="form-group">
+					<label>Location</label>
+					<input type="text" ng-model="update.location" typeahead="location for location in locations" class="form-control">
+				</div>
+				<div class="form-group">
+					<label>Returning</label>
+					<span class="input-group">
+						<input type="text" class="form-control" is-open="opened" datepicker-popup="d MMMM yyyy" ng-model="update.returning" ng-required="true" close-text="Close" />
+						<span class="input-group-btn">
+							<button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+						</span>
+					</span>
+				</div>
+				<div class="form-group">
+					<div class="btn-group">
+						<button type="button" class="btn btn-default" ng-click="addMinutes(15)">15m</button>
+						<button type="button" class="btn btn-default" ng-click="addMinutes(30)">30m</button>
+						<button type="button" class="btn btn-default" ng-click="addMinutes(60)">1 hr</button>
+						<button type="button" class="btn btn-default" ng-click="setTomorrow()">Tomorrow</button>
+						<button type="button" class="btn btn-default" ng-click="addMinutes(10080)">1 Week</button>
+					</div>
+					<div ng-model="update.returning" style="display:inline-block;">
+						<timepicker hour-step="1" minute-step="15" show-meridian="false" class="btn-group"></timepicker>
+					</div>
+				</div>
+			</div>
+			<footer class="panel-footer">
+				<button type="submit" class="btn btn-primary" ng-disabled="statusUpdate.$invalid">Update</button>
+				<button ng-if="!isCheckedIn()" type="button" class="btn btn-primary" ng-click="checkin()">Check-In</button>
+			</footer>
+		</form>
+		</div>
+	</div>

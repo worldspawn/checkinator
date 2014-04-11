@@ -1,5 +1,6 @@
 public/app/app.js
 public/index.html
+public/app/css/style.css*
 node_modules
 coverage
 src/app.templates
