@@ -1,12 +1,14 @@
 <header class="page-title">
-	<h1>Status</h1>
+	<h1>Who's where?</h1>
 </header>
 
 	<div class="panel-status-list">
-		<header class="panel-heading">
-			<h3>Staff Lookup</h3>
-		</header>
 		<div class="panel-body">
+			
+			<div class="alert alert-info" ng-if="!statusList">
+				<p>Please log in to view statuses.</p>
+			</div>
+
 			<div class="media-list">
 				<div class="media" ng-repeat="status in statusList">
 					<div class="avatar pull-left">
@@ -20,6 +22,56 @@
 						
 					</div>
 				</div>
+
+				<div class="media" ng-repeat="status in statusList">
+					<div class="avatar pull-left">
+						<img ng-src="{{status.picture}}" class="media-object img-circle" width="80" />
+					</div>
+					<div class="media-body">
+						<h4>{{status.displayName}}</h4>
+						<span>
+							{{status.status.status}} @ {{status.status.location}} 
+							<span ng-if="status.status.returning">till {{status.status.returning | date : 'HH:mm MMM dd'}}</span></span>
+						
+					</div>
+				</div>
+				<div class="media" ng-repeat="status in statusList">
+					<div class="avatar pull-left">
+						<img ng-src="{{status.picture}}" class="media-object img-circle" width="80" />
+					</div>
+					<div class="media-body">
+						<h4>{{status.displayName}}</h4>
+						<span>
+							{{status.status.status}} @ {{status.status.location}} 
+							<span ng-if="status.status.returning">till {{status.status.returning | date : 'HH:mm MMM dd'}}</span></span>
+						
+					</div>
+				</div>
+				<div class="media" ng-repeat="status in statusList">
+					<div class="avatar pull-left">
+						<img ng-src="{{status.picture}}" class="media-object img-circle" width="80" />
+					</div>
+					<div class="media-body">
+						<h4>{{status.displayName}}</h4>
+						<span>
+							{{status.status.status}} @ {{status.status.location}} 
+							<span ng-if="status.status.returning">till {{status.status.returning | date : 'HH:mm MMM dd'}}</span></span>
+						
+					</div>
+				</div>
+				<div class="media" ng-repeat="status in statusList">
+					<div class="avatar pull-left">
+						<img ng-src="{{status.picture}}" class="media-object img-circle" width="80" />
+					</div>
+					<div class="media-body">
+						<h4>{{status.displayName}}</h4>
+						<span>
+							{{status.status.status}} @ {{status.status.location}} 
+							<span ng-if="status.status.returning">till {{status.status.returning | date : 'HH:mm MMM dd'}}</span></span>
+						
+					</div>
+				</div>
+
 			</div>
 		</div>
 	</div>
