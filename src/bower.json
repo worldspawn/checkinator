@@ -1,0 +1,22 @@
+{
+  "name": "checkinator",
+  "version": "0.0.0",
+  "homepage": "https://github.com/worldspawn/checkinator",
+  "authors": [
+    "worldspawn juanojeda"
+  ],
+  "description": "checkinator",
+  "main": "public/app/css/style.css",
+  "license": "n/a",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "~3.1.1"
+  }
+}

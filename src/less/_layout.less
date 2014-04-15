@@ -1,0 +1,53 @@
+@height-panel-login: @baseline * 5.5;
+@margin-panel-login: @baseline * 2;
+@height-page-title : @baseline * 4;
+.panel-login {
+    height: @height-panel-login;
+    margin-bottom: @margin-panel-login;
+}
+.page-title {
+    height: @height-page-title;
+    padding: 0 15px;
+    margin: 0 0 @baseline 0;
+    h1 {
+        margin: 0;
+    }
+}
+.status-layout {
+    .flex-display();
+    .flex-direction(row);
+    .flex-wrap(wrap);
+    .justify-content(space-between);
+    .align-items(flex-start);
+    overflow: hidden;
+    .page-title {
+        .flex(1 0 100%);
+    }
+    .panel-status-list,
+    .panel-status-update {
+        margin: 0 15px;
+    }
+    .panel-status-list {
+        .flex(5 5 50%);
+        overflow: auto;
+        // uses css calc to set height to remaining height
+        // after login bar and page title, but...
+        // surely there's a better way to do this?
+        max-height: ~"calc(100% - @{height-panel-login} - @{margin-panel-login} - @{height-page-title} - @{baseline} - @{baseline})";
+    }
+    .panel-status-update {
+        .flex(1 1 450px);
+    }
+    @media all and (max-width: (@screen-md-min + 45px)){
+        .panel-status-update {
+            .flex-order(1);
+        }
+        .page-title {
+            margin-top: @baseline;
+            .flex-order(2);
+        }
+        .panel-status-list {
+            .flex-order(3);
+        }
+    }
+}

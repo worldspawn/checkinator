@@ -43,10 +43,29 @@ module.exports = function(grunt) {
         dest: 'src/app.templates/app.templates.js',
       }
     },
+    less: {
+      dev: {
+        options: {
+          compress: true,
+          sourceMap: true,
+          sourceMapFilename: 'public/app/css/style.css.map',
+          soureMapURL: 'public/app/css/style.css.map',
+          outputSourceFiles: true
+        },
+        files: {
+          "public/app/css/style.css" : "src/less/main.less"
+        }
+
+      }
+    },
     watch: {
       scripts: {
         tasks: ['concat', 'jshint'],
         files: ['src/app.*/*.js', 'src/app.js']
+      },
+      less: {
+        tasks: ['less'],
+        files: ['src/less/**/*']
       },
       templates: {
         tasks: ['html2js'],
@@ -60,9 +79,10 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-concat');
+  grunt.loadNpmTasks('grunt-contrib-less');
   grunt.loadNpmTasks('grunt-karma');
   grunt.loadNpmTasks('grunt-karma-coveralls');
   grunt.loadNpmTasks('grunt-html2js');
 
-  grunt.registerTask('default', ['html2js', 'concat', 'jshint']);
+  grunt.registerTask('default', ['html2js', 'less', 'concat', 'jshint']);
 }
